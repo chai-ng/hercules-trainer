@@ -1,7 +1,10 @@
 require 'sinatra'
 require 'PG'
-require 'sinatra/reloader'
-require 'pry'
+if settings.development?
+  require 'sinatra/reloader'
+  also_reload File.expand_path(__dir__, 'models/*')
+  require 'pry'
+end
 require 'BCrypt'
 require 'date'
 require 'groupdate'
