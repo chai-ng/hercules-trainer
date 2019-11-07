@@ -6,7 +6,7 @@ if settings.development?
   also_reload File.expand_path(__dir__, 'models/*')
   require 'pry'
 end
-require 'BCrypt'
+require 'bcrypt'
 require 'date'
 require 'groupdate'
 require 'chartkick'
