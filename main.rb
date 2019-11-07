@@ -1,10 +1,9 @@
 require 'sinatra'
 require 'pg'
-require 'pry'
 if settings.development?
+  require 'pry'
   require 'sinatra/reloader'
   also_reload File.expand_path(__dir__, 'models/*')
-  require 'pry'
 end
 require 'bcrypt'
 require 'date'
