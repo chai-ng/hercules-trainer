@@ -12,7 +12,7 @@ require 'chartkick'
 enable :sessions
 
 def exec_sql command
-  conn = PG.connect(dbname: 'hercules')
+  conn = PG.connect(ENV['DATABASE_URL'] || {dbname: "hercules"})
   results = conn.exec(command)
   conn.close
   return results
