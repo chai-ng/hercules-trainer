@@ -1,8 +1,9 @@
 require 'sinatra'
 require 'PG'
+require 'pry'
 if settings.development?
-  # require 'sinatra/reloader'
-  # also_reload File.expand_path(__dir__, 'models/*')
+  require 'sinatra/reloader'
+  also_reload File.expand_path(__dir__, 'models/*')
   require 'pry'
 end
 require 'BCrypt'
@@ -51,7 +52,7 @@ post '/login' do
   password = BCrypt::Password.new(@user["hashed_password"])
   if password == params[:password] && @user != nil
     session[:user_id] = @user["user_id"]
-    redirect "/"
+    redirect "/progress/#{@user["user_id"]}"
   else
     redirect "/login/error"
   end
@@ -61,14 +62,9 @@ get '/login/error' do
   erb :login_error
 end
 
-delete '/logout' do
+get '/logout' do
   session[:user_id] = nil
   redirect '/login'
-end
-
-get '/users/user_id' do
-  # Show user details
-  erb :user
 end
 
 get '/users/new' do
@@ -94,6 +90,7 @@ get '/exercises' do
 end
 
 get '/exercises/new' do
+  redirect "/login" unless logged_in?
   @user = current_user
   erb :new_exercise
 end
@@ -103,55 +100,55 @@ post '/exercises/new' do
   redirect "/exercises"
 end
 
-get '/exercises/start/:exercise_id' do
-  @user = current_user
-  @exercise = get_exercise(params[:exercise_id])
-  @progress = get_exercise_progress(@user["user_id"],@exercise["exercise_id"]).to_a
-  erb :start_workout
+post '/exercises/edit' do
+  binding.pry
+  update_exercise(params[:exercise_id],params[:exercise_name],params[:primary_muscle_group],params[:difficulty],params[:measurement_type], params[:description])
+  redirect "/exercises/#{params[:exercise_id]}/d"
 end
 
-get '/live_workout/:exercise_id' do
-  @user = current_user
-  @exercise = get_exercise(params[:exercise_id])
-  erb :live_workout
+post '/exercises/delete' do
+  delete_exercise(params[:exercise_id])
+  redirect "/exercises"
 end
 
-post '/live_workout/:exercise_id' do
-  create_entry(current_user["user_id"],params[:exercise_id],Time.now,params[:reps],params[:weight])
-  redirect "/exercises/start/#{params[:exercise_id]}"
+get '/exercises/:exercise_id/:frequency' do
+  @exercise = get_exercise(params[:exercise_id])
+  if logged_in?
+    @user = current_user
+    @frequency = params[:frequency]
+    @reps = get_exercise_progress(@user["user_id"],@exercise["exercise_id"],@frequency,'reps')
+    @weight = get_exercise_progress(@user["user_id"],@exercise["exercise_id"],@frequency,'weight')
+    @volume = get_exercise_progress(@user["user_id"],@exercise["exercise_id"],@frequency,'volume')
+    @time = get_exercise_progress(@user["user_id"],@exercise["exercise_id"],@frequency,'time')
+  end
+  erb :exercise
+end
+
+get '/start/reps/:exercise_id' do
+  @user = current_user
+  @exercise = get_exercise(params[:exercise_id])
+  erb :rep_workout
+end
+
+post '/start/reps/:exercise_id' do
+  @user = current_user
+  create_rep_set(@user["user_id"],params[:exercise_id],Time.now,params[:reps],params[:weight])
+  redirect "/exercises/#{params[:exercise_id]}/d"
+end
+
+get '/start/timer/:exercise_id' do
+  @user = current_user
+  @exercise = get_exercise(params[:exercise_id])
+  erb :time_workout
+end
+
+post '/start/timer/:exercise_id' do
+  @user = current_user
+  create_time_set(current_user["user_id"],params[:exercise_id],Time.now,params[:duration])
+  redirect "/exercises/#{params[:exercise_id]}/d"
 end
 
 get '/progress/:user_id' do
-  # View current progress across tracks, workouts, sessions and exercises
+  @user = current_user
   erb :progress
-end
-
-# Retired functions
-
-get '/workouts' do
-  @workouts = get_all('workouts')
-  @user = current_user
-  erb :workouts
-end
-
-get '/workouts/user/:user_id' do
-  @user = current_user
-  @workouts = get_user_workouts(@user["user_id"])
-  erb :workouts
-end
-
-get '/workouts/:workout_id' do
-  @exercises = get_all_exercises(params[:workout_id])
-  erb :workout
-end
-
-get '/workouts/new' do
-  @user = current_user
-  # Create a new workout
-  erb :new_workout
-end
-
-post '/workouts/new' do
-  create_workout(params[:workout_name],params[:primary_muscle_group], params[:splat].split('.'))
-  redirect '/workouts'
 end

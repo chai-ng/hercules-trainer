@@ -1,0 +1,44 @@
+<canvas id="chart-reps" width="1200"></canvas>
+            <script>
+                var userProgress = document.getElementById('chart-reps');
+                var momentDates = [];
+                <% if @datesArray[0].include?("Week") %>
+                    <%= @datesArray %>.forEach(date => {
+                        momentDates.push(moment(date, 'WW YY'));
+                    });
+                <% else %>
+                    <%= @datesArray %>.forEach(date => {
+                        momentDates.push(moment(date));
+                    });
+                <% end %>
+                var progressChart = new Chart(userProgress, {
+                    type: 'line',
+                    data: {
+                        labels: momentDates,
+                        datasets: [{
+                            label: "<%= @exercise["exercise_name"] %>",
+                            data: <%= @repsArray %>
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                type: 'time',
+                                distribution: 'linear',
+                                time: {
+                                    unit: 'week',
+                                    stepSize: 4
+                                }
+                            }],
+                            yAxes: [{
+                                type: 'linear',
+                                ticks: {
+                                    beginAtZero: true,
+                                    maxTicksLimit: 8,
+                                    suggestedMax: <%= @maxReps %>
+                                }
+                            }]
+                        }
+                    }
+                })
+            </script>

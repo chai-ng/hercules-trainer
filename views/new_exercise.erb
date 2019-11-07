@@ -1,27 +1,47 @@
-<form action="/exercises/new" method="post">
-    <label for="">name</label>
-    <input type="text" name="exercise_name">
+<div class="container">
+    <form action="/exercises/new" method="post">
+        <div class="input-field">
+            <label for="">name</label>
+            <input type="text" name="exercise_name">
+        </div>
 
-    <label for="">description</label>
-    <input type="text" name="description">
+        <div class="input-field">
+            <label for="">description</label>
+            <input type="text" name="description">
+        </div>
 
-    <label for="">primary muscle group</label>
-    <select name="primary_muscle_group">
-        <option value="arms">arms</option>
-        <option value="back">back</option>
-        <option value="core">core</option>
-        <option value="legs">legs</option>
-        <option value="cardio">cardio</option>
-    </select>
+        <div class="row">
 
-    <label for="">difficulty</label>
-    <span>Easy</span><input type="range" name="difficulty" min="1" max="5" step="1"><span>Hard</span>
+            <div class="input-field col s6">
+                <select name="primary_muscle_group" id="">
+                    <option class="amber-text" value="arms">arms</option>
+                    <option class="amber-text" value="core">core</option>
+                    <option class="amber-text" value="back">back</option>
+                    <option class="amber-text" value="legs">legs</option>
+                </select>
+                <label for="">primary muscle group</label>
+            </div>
+            <div class="input-field col s6">
+                <select name="measurement_type">
+                    <option value="reps">reps</option>
+                    <option value="time">time</option>
+                </select>
+                <label for="">measurement type</label>
+            </div>
+        </div>
+        <div class="input-field">
+            <div class="row">
+                <label for="">difficulty</label>
+            </div>
+            <div class="row">
+                <span class="col s3 center-align">Easy</span><input class="col s6" type="range" name="difficulty"
+                    min="1" max="5" step="1"><span class="col s3 center-align">Hard</span>
+            </div>
+        </div>
 
-    <label for="">measurement type</label>
-    <select name="measurement_type">
-        <option value="reps">reps</option>
-        <option value="time">time</option>
-    </select>
+        <div class="row">
+            <button type="submit" class="right btn waves-effect waves-light amber darken-2">create exercise</button>
+        </div>
 
-    <button type="submit">create exercise</button>
-</form>
+    </form>
+</div>

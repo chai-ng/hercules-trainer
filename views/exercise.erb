@@ -1,0 +1,165 @@
+<div class="container">
+    <div class="row">
+        <h4 class="col s9"><%= @exercise["exercise_name"] %></h4>
+    </div>
+
+    <p class="grey-text"><%= @exercise["primary_muscle_group"]%></p>
+    <a href="#edit-exercise" class="btn-flat grey-text right col s3 modal-trigger right"><i
+            class="material-icons grey-text">create</i></a>
+
+    <div id="edit-exercise" class="modal">
+        <div class="modal-content">
+            <h5>Edit <%= @exercise["exercise_name"]%></h5>
+            <div class="divider"></div>
+            <div class="section">
+            <form action="/exercises/edit" method="post">
+                <input type="hidden" name="exercise_id" value=<%= @exercise["exercise_id"]%>>
+                <div class="input-field">
+                    <label for="">name</label>
+                    <input type="text" name="exercise_name" value="<%= @exercise["exercise_name"]%>">
+                </div>
+
+                <div class="input-field">
+                    <label for="">description</label>
+                    <input type="text" name="description" value="<%= @exercise["description"]%>">
+                </div>
+
+                <div class="input-field col s6">
+                    <select name="primary_muscle_group" id="" value="<%= @exercise["primary_muscle_group"]%>">
+                        <option class="amber-text" value="arms">arms</option>
+                        <option class="amber-text" value="core">core</option>
+                        <option class="amber-text" value="back">back</option>
+                        <option class="amber-text" value="legs">legs</option>
+                    </select>
+                    <label for="">primary muscle group</label>
+                </div>
+                <div class="input-field col s6">
+                    <select name="measurement_type" value="<%= @exercise["measurement_type"]%>">
+                        <option value="reps">reps</option>
+                        <option value="time">time</option>
+                    </select>
+                    <label for="">measurement type</label>
+                </div>
+                <div class="input-field">
+                    <div class="row">
+                        <label for="">difficulty</label>
+                    </div>
+                    <div class="row">
+                        <span class="col s3 center-align">Easy</span><input class="col s6" type="range"
+                            name="difficulty" min="1" max="5" step="1" value=<%= @exercise["difficulty"]%>><span class="col s3 center-align">Hard</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close waves-effect waves-green btn-flat">Done</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <p><%= @exercise["description"] %></p>
+        <%# <form action="/exercises/delete" method="post">
+            <input type="hidden" name="exercise_id" value=<%= @exercise["exercise_id"]>>
+            <button class="btn-flat waves-effect waves-light amber-text lighten-5 col s4">Delete</button>
+        </form> %>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section">
+        <div class="row">
+            <h5 class="col s6">Your progress</h5>
+            <a href="#" data-target="frequency" class="dropdown-trigger btn-flat amber-text right">Frequency
+                <i class="material-icons">arrow_drop_down</i>
+            </a>
+            <ul id="frequency" class="dropdown-content">
+                <li><a href="d" class="amber-text">Daily</a></li>
+                <li><a href="w" class="amber-text">Weekly</a></li>
+                <li><a href="m" class="amber-text">Monthly</a></li>
+            </ul>
+        </div>
+
+        <% if @user != nil %>
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="#reps" class="active amber-text">Reps</a></li>
+                    <li class="tab col s3"><a href="#weight" class="amber-text">Weight</a></li>
+                    <li class="tab col s3"><a href="#volume" class="amber-text">Volume</a></li>
+                    <li class="tab col s3"><a href="#time" class="amber-text">Time</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container" id="reps">
+            <%= area_chart @reps, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
+        </div>
+
+        <div class="container" id="weight">
+            <%= area_chart @weight, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
+        </div>
+
+        <div class="container" id="volume">
+            <%= area_chart @volume, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
+            <p>Volume = Weight * Reps</p>
+        </div>
+
+        <div class="container" id="time">
+            <%= area_chart @time, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
+        </div>
+
+        <% else %>
+        <div class="row">Login for more information</div>
+        <% end %>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <h5>Hercules Top 3</h5>
+        <ul class="collection">
+            <li class="collection-item avatar valign-wrapper">
+                <img src="https://via.placeholder.com/100" alt="" class="circle">
+                <span class="title">Person 1</span>
+            </li>
+            <li class="collection-item avatar valign-wrapper">
+                <img src="https://via.placeholder.com/100" alt="" class="circle">
+                <span class="title">Person 1</span>
+            </li>
+            <li class="collection-item avatar valign-wrapper">
+                <img src="https://via.placeholder.com/100" alt="" class="circle">
+                <span class="title">Person 1</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <h5>Related exercises</h5>
+        <div class="container">
+            <p>In construction</p>
+        </div>
+    </div>
+</div>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large amber darken-2">
+        <i class="large material-icons">play_arrow</i>
+    </a>
+    <% if logged_in? %>
+    <ul>
+        <li class="exercise-options"><a class="btn-floating amber" href="/start/reps/<%= @exercise["exercise_id"] %>"><i
+                    class="material-icons">repeat</i></a></li>
+        <li class="exercise-options"><a class="btn-floating amber"
+                href="/start/timer/<%= @exercise["exercise_id"] %>"><i class="material-icons">timer</i></a></li>
+    </ul>
+    <% else %>
+    <ul>
+        <li class="exercise-options"><a class="btn-floating amber" href="/login"><i
+                    class="material-icons">repeat</i></a></li>
+        <li class="exercise-options"><a class="btn-floating amber" href="/login"><i class="material-icons">timer</i></a>
+        </li>
+    </ul>
+    <% end %>
+</div>

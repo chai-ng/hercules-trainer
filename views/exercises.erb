@@ -1,16 +1,23 @@
-<h1>Exercises</h1>
-
-<form action="/exercises/new">
-    <button>Add exercise</button>
-</form>
+<div class="container">
 
 <% @exercises.each do |exercise| %>
-    <div class="card">
-        <h2><%= exercise["exercise_name"]%></h2>
-        <p><%= exercise["difficulty"]%></p>
-        <p><%= exercise["description"]%></p>
-        <form action="/exercises/start/<%= exercise["exercise_id"]%>">
-            <button>Start</button>
-        </form>
+    <div class="row">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title"><%= exercise["exercise_name"]%></span class="card-title">
+                <p><%= exercise["description"]%></p>
+            </div>
+            <div class="card-action right-align">
+                <a href="/exercises/<%= exercise["exercise_id"]%>/d">Challenge</a>
+            </div>
+        </div>
     </div>
 <% end %>
+</div>
+
+<a href=""></a>
+
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large amber darken-2" href="/exercises/new">
+    <i class="large material-icons">add</i>
+</a>

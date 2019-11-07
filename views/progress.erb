@@ -1,32 +1,25 @@
-<h1>Welcome back, <%= @user["first_name"]%></h1>
+<div class="container">
 
-<%# Load their last 7 day workouts %>
-<div class="card">
-    <h2>This week's progress</h2>
-    <%= line_chart [['2015-07-20', 2], ['2015-07-21', 4], ['2015-07-22', 1], ['2015-07-23',7]], discrete: true, xtitle: 'Push ups'%>
+<h5>Welcome back, <%= @user["first_name"]%></h5>
 
-    <%# <% user_progress = get_exercise_progress(6,5).to_a %>
-    <%# user_progress = [{name: "Reps", data: [5, 10, 15]}, {name: "Date", data: [0,0.5,1]}] %>
-    <%# %user_progress = [["2019-11-01",10],["2019-11-02",15],["2019-11-03",20]]%>
-    <%#= area_chart user_progress, xtitle: "Date", ytitle: "Push-ups"%>
+<div class="divider"></div>
+
+<div class="section">
+    <h6>Your workouts this week</h6>
+    <img src="https://via.placeholder.com/300" alt="">
+    <%#%>
 </div>
 
-<%# Load their goals %>
-<%# Max 3 then option to expand or contract the card like accordion %>
-<div class="card">
-    <h2>Your goals</h2>
+<div class="section">
+    <h6>Time spent on body</h6>
+    <img src="https://via.placeholder.com/300" alt="">
+    <%#%>
 </div>
 
-<%# Load their workouts %>
-<%# Max 3 then option to expand or contract the card like accordion %>
-<div class="card">
-    <h2>Your workouts</h2>
-    <div class="mini-card">
-        <h3>Workout 1</h3>
-        <form action="/sessions/new/:workout_id">
-            <button>start workout</button>
-        </form>
-    </div>
+<div class="section">
+    <h6>Your top exercises</h6>
+    <img src="https://via.placeholder.com/300" alt="">
+    <%#%>
 </div>
 
-<form action="/"></form>
+</div>

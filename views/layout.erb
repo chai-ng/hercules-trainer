@@ -10,49 +10,78 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="/javascripts/moment.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.2/dist/Chart.min.js"></script>
+  <script src="/javascripts/chartkick.js"></script>
 
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
-  <% if logged_in? %>
-
-  <nav class="row amber darken-2">
-      <div class="col s3"><a href="/"><img src="/img/hercules-logo-removebg-preview.png" alt="" class="nav-logo"></a></div>
+  <header>
+    <% if logged_in? %>
+    <nav class="row amber darken-2">
+      <div class="col s3 nav-icon"><a href="/"><img src="/img/hercules-logo-removebg-preview.png" alt="" class="nav-logo"></a></div>
       <div class="col s3"><a href="/exercises">Exercises</a></div>
       <div class="col s3"><a href="/progress/<%= @user["user_id"]%>">Progress</a></div>
-      <form action="/logout" method="post">
-        <input type="hidden" name="_method" value="delete">
-        <button class="col s3" type="submit">logout</button>
-      </form>
-  </nav>
+      <div class="col s3"><a href="/logout">Logout</a></div>
+    </nav>
+  </header>
 
   <% else %>
 
   <nav class="row amber darken-2">
-    <div class="col s4 center-align"><a href="/"><img src="/img/hercules-logo-removebg-preview.png" alt="" class="nav-logo"></a></div>
+    <div class="col s4 center-align"><a href="/" class="nav-icon"><img src="/img/hercules-logo-removebg-preview.png"
+          alt="" class="nav-logo"></a></div>
     <div class="col s4 center-align"><a href="/exercises">Exercises</a></div>
-    <div class="col s4 center-align"><a href="/login">Login</a></div>
+    <div class="col s4 center-align"><a class="modal-trigger" href="#login-modal">Login</a></div>
   </nav>
 
-  <% end %>
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <div class="row"><h5>Sign In</h5></div>
+        <form action="/login" method="post">
+            <div class="row input-field">
+              <label for="">email</label>
+              <input type="email" name="email">
+            </div>
+            
+            <div class="row input-field">
+              <label for="">password</label>
+              <input type="password" name="password">
+            </div>
 
-  <div class="container">
-    <%= yield %>
-    <div class="divider"></div>
-    <div class="section">
-      <footer>Logo credits to <a href="https://dribbble.com/curtrjensen">Curt R. Jensen</a>.</footer>
+            <div class="row">
+              <button type="submit" class="btn waves-effect waves-light amber darken-2 modal-close" name="action">submit
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
     </div>
+    <div class="modal-footer">
+      <a href="/users/new" class="btn-flat waves-effect waves-amber amber-text modal-close left">Create account</a>
+    </div>
+    </form>
   </div>
 
-  <script src="/javascripts/application.js"></script>
+  <% end %>
+  </header>
+
+  <main>
+    <%= yield %>
+  </main>
+
+  <footer class="page-footer amber lighten-3">
+    <div class="footer-copyright amber darken-1">
+      <div class="container">
+        © 2019 Copyright | Made with &hearts; by chai-ng
+        <br>Logo credits to <a class="white-text" href="https://dribbble.com/curtrjensen">Curt R. Jensen</a>.
+      </div>
+    </div>
+  </footer>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-  <script src="/javascripts/moment.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.2/dist/Chart.min.js"></script>
-  <script src="/javascripts/chartkick.js"></script>
+  <script src="/javascripts/application.js"></script>
 </body>
 
 </html>

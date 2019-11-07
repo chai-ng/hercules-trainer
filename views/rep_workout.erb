@@ -1,0 +1,19 @@
+<div class="container">
+    <h5><%= @exercise["exercise_name"] %></h5>
+    <form action="/start/reps/<%= @exercise["exercise_id"]%>" method="post">
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="reps">reps</label>
+                <input type="number" name="reps">
+            </div>
+            <div class="input-field col s6">
+                <label for="weight">weight (kg)</label>
+                <input type="number" name="weight" value="1">
+            </div>
+        </div>
+
+        <div class="row">
+            <button class="btn waves-effect waves-light amber darken-2 right">complete</button>
+        </div>
+    </form>
+</div>
