@@ -24,12 +24,14 @@ end
 
 require_relative 'models/users'
 require_relative 'models/progress'
-require_relative 'models/workouts'
+require_relative 'models/exercises'
 
 get '/' do
   # Load home page if user is logged in, or else redirect to login page
-  redirect '/login' unless logged_in?
   @user = current_user
+  if logged_in?
+    redirect "/progress/#{@user["user_id"]}"
+  end
   erb :index
 end
 

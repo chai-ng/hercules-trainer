@@ -6,41 +6,53 @@
   <title>Hercules</title>
   <link rel='stylesheet' href='/stylesheets/main.css'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+  <%# Materialize CSS %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <% if logged_in? %>
+
+  <nav class="row amber darken-2">
+      <div class="col s3"><a href="/"><img src="/img/hercules-logo-removebg-preview.png" alt="" class="nav-logo"></a></div>
+      <div class="col s3"><a href="/exercises">Exercises</a></div>
+      <div class="col s3"><a href="/progress/<%= @user["user_id"]%>">Progress</a></div>
+      <form action="/logout" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button class="col s3" type="submit">logout</button>
+      </form>
+  </nav>
+
+  <% else %>
+
+  <nav class="row amber darken-2">
+    <div class="col s4 center-align"><a href="/"><img src="/img/hercules-logo-removebg-preview.png" alt="" class="nav-logo"></a></div>
+    <div class="col s4 center-align"><a href="/exercises">Exercises</a></div>
+    <div class="col s4 center-align"><a href="/login">Login</a></div>
+  </nav>
+
+  <% end %>
+
+  <div class="container">
+    <%= yield %>
+    <div class="divider"></div>
+    <div class="section">
+      <footer>Logo credits to <a href="https://dribbble.com/curtrjensen">Curt R. Jensen</a>.</footer>
+    </div>
+  </div>
+
+  <script src="/javascripts/application.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
   <script src="/javascripts/moment.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.2/dist/Chart.min.js"></script>
   <script src="/javascripts/chartkick.js"></script>
-</head>
-
-<body>
-  <h1>Hercules icon</h1>
-
-  <%= yield %>
-
-  <% if logged_in? %>
-
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/exercises">Exercises</a></li>
-      <li><a href="/progress">Progress</a></li>
-      <li><a href="/users/<%= @user["user_id"]%>">Profile</a></li>
-    </ul>
-  </nav>
-  
-  <form action="/logout" method="post">
-    <input type="hidden" name="_method" value="delete">
-    <button type="submit">logout</button>
-  </form>
-
-  <% end %>
-
-  
-  <script src="/javascripts/application.js"></script>
 </body>
 
 </html>

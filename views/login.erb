@@ -1,11 +1,27 @@
-<form action="/login" method="post">
-    <label for="">email</label>
-    <input type="email" name="email">
-    <label for="">password</label>
-    <input type="password" name="password">
-    <button type="submit">submit</button>
-</form>
+<div class="section">
+    <form action="/login" method="post">
+        <div class="row">
+            <label for="">email</label>
+            <input type="email" name="email">
+        </div>
+        <div class="row">
+            <label for="">password</label>
+            <input type="password" name="password">
+        </div>
 
-<form action="/users/new">
-    <button type="submit">Create account</button>
-</form>
+        <div class="row">
+            <button type="submit" class="btn waves-effect waves-light right amber darken-2" name="action">submit
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+    <div class="row">Haven't got a Hercules account?</div>
+    <form action="/users/new">
+        <button type="submit" class="btn-flat waves-effect waves-teal amber lighten-5">Create account</button>
+    </form>
+</div>
