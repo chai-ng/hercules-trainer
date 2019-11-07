@@ -1,8 +1,8 @@
 require 'sinatra'
 require 'PG'
 if settings.development?
-  require 'sinatra/reloader'
-  also_reload File.expand_path(__dir__, 'models/*')
+  # require 'sinatra/reloader'
+  # also_reload File.expand_path(__dir__, 'models/*')
   require 'pry'
 end
 require 'BCrypt'
