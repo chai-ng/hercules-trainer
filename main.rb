@@ -66,8 +66,8 @@ end
 
 get '/users/user_id' do
   # Show user details
-    erb :user
-  end
+  erb :user
+end
 
 get '/users/new' do
   erb :new_user
@@ -119,21 +119,17 @@ post '/live_workout/:exercise_id' do
   redirect "/exercises/start/#{params[:exercise_id]}"
 end
 
+get '/progress/:user_id' do
+  # View current progress across tracks, workouts, sessions and exercises
+  erb :progress
+end
+
+# Retired functions
+
 get '/workouts' do
   @workouts = get_all('workouts')
   @user = current_user
   erb :workouts
-end
-
-get '/workouts/new' do
-  @user = current_user
-  # Create a new workout
-  erb :new_workout
-end
-
-post '/workouts/new' do
-  create_workout(params[:workout_name],params[:primary_muscle_group], params[:splat].split('.'))
-  redirect '/workouts'
 end
 
 get '/workouts/user/:user_id' do
@@ -147,12 +143,13 @@ get '/workouts/:workout_id' do
   erb :workout
 end
 
-get '/progress/:user_id' do
-  # View current progress across tracks, workouts, sessions and exercises
-  erb :progress
+get '/workouts/new' do
+  @user = current_user
+  # Create a new workout
+  erb :new_workout
 end
 
-get '/sessions/:user_id' do
-  # Show all previous sessions
-  erb :workout_sessions
+post '/workouts/new' do
+  create_workout(params[:workout_name],params[:primary_muscle_group], params[:splat].split('.'))
+  redirect '/workouts'
 end
