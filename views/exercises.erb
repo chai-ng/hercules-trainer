@@ -1,0 +1,16 @@
+<h1>Exercises</h1>
+
+<form action="/exercises/new">
+    <button>Add exercise</button>
+</form>
+
+<% @exercises.each do |exercise| %>
+    <div class="card">
+        <h2><%= exercise["exercise_name"]%></h2>
+        <p><%= exercise["difficulty"]%></p>
+        <p><%= exercise["description"]%></p>
+        <form action="/exercises/start/<%= exercise["exercise_id"]%>">
+            <button>Start</button>
+        </form>
+    </div>
+<% end %>

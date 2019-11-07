@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hercules</title>
+  <link rel='stylesheet' href='/stylesheets/main.css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+  <script src="/javascripts/moment.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.2/dist/Chart.min.js"></script>
+  <script src="/javascripts/chartkick.js"></script>
+</head>
+
+<body>
+  <h1>Hercules icon</h1>
+
+  <%= yield %>
+
+  <% if logged_in? %>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/exercises">Exercises</a></li>
+      <li><a href="/progress">Progress</a></li>
+      <li><a href="/users/<%= @user["user_id"]%>">Profile</a></li>
+    </ul>
+  </nav>
+  
+  <form action="/logout" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">logout</button>
+  </form>
+
+  <% end %>
+
+  
+  <script src="/javascripts/application.js"></script>
+</body>
+
+</html>

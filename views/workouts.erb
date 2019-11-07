@@ -1,0 +1,21 @@
+<h1>Your workouts</h1>
+
+<form action="/workouts/user/<%= @user["user_id"] %>">
+    <button>Your workouts</button>
+</form>
+
+<form action="/workouts/new">
+    <button>Create workout</button>
+</form>
+
+<% @workouts.each do |workout| %>
+    <div class="card">
+        <h2><%= workout["workout_name"]%></h2>
+        <form action="/workouts/<%= workout["workout_id"]%>">
+            <button>View</button>
+        </form>
+        <form action="/sessions/new/<%= workout["workout_id"]%>">
+            <button>Start</button>
+        </form>
+    </div>
+<% end %>

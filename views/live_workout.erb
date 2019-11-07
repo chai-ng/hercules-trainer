@@ -1,0 +1,19 @@
+<h1><% @exercise["exercise_name"] %></h1>
+
+
+<% if @exercise["measurement_type"] == 'time'%>
+
+    <p>In progress</p>
+    
+<% else %>
+<form action="/live_workout/<%= @exercise["exercise_id"]%>" method="post">
+    <label for="">reps</label>
+    <input type="number" name="reps">
+
+    <label for="">weight</label>
+    <input type="number" name="weight">
+
+    <button>submit</button>
+</form>
+
+<% end %>

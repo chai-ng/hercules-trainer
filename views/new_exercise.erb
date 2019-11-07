@@ -1,0 +1,27 @@
+<form action="/exercises/new" method="post">
+    <label for="">name</label>
+    <input type="text" name="exercise_name">
+
+    <label for="">description</label>
+    <input type="text" name="description">
+
+    <label for="">primary muscle group</label>
+    <select name="primary_muscle_group">
+        <option value="arms">arms</option>
+        <option value="back">back</option>
+        <option value="core">core</option>
+        <option value="legs">legs</option>
+        <option value="cardio">cardio</option>
+    </select>
+
+    <label for="">difficulty</label>
+    <span>Easy</span><input type="range" name="difficulty" min="1" max="5" step="1"><span>Hard</span>
+
+    <label for="">measurement type</label>
+    <select name="measurement_type">
+        <option value="reps">reps</option>
+        <option value="time">time</option>
+    </select>
+
+    <button type="submit">create exercise</button>
+</form>
