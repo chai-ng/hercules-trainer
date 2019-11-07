@@ -1,5 +1,5 @@
 require 'sinatra'
-require 'PG'
+require 'pg'
 require 'pry'
 if settings.development?
   require 'sinatra/reloader'

@@ -1,6 +1,6 @@
 require_relative '../main.rb'
-require 'BCrypt'
-require 'PG'
+require 'bcrypt'
+require 'pg'
 
 def logged_in?
     return !!current_user

@@ -85,4 +85,9 @@ def get_top_users exercise_id, measurement_type, time_period = 7
     else
         exec_sql("SELECT user_id, TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean, SUM(reps * weight) AS sum FROM exercise_sets WHERE date_time BETWEEN current_date - #{time_period - 1} AND current_date + 1 GROUP BY user_id, date_clean;")
     end
+
+    # Return array, sorted by volume highest to lowest for each user
+    # object {user_id, volume}
+
+    # Get array of each users,
 end
