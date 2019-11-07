@@ -13,10 +13,10 @@ def delete_exercise exercise_id
     exec_sql("DELETE FROM exercises WHERE exercise_id = #{exercise_id};")
 end
 
-def get_exercise_progress user_id, exercise_id, interval, metric, limit = 30
+def get_exercise_progress user_id, exercise_id, interval = 'd', metric = 'reps', limit = 30
     # Metric = reps, weight, volume or time
     # Interval = group by daily, weekly, monthly OR no grouping
-    progress = "SELECT "
+    progress = "SELECT user_id, "
 
     if interval == 'd'
         progress += "TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean"
@@ -38,7 +38,7 @@ def get_exercise_progress user_id, exercise_id, interval, metric, limit = 30
         progress += ', SUM(reps) AS sum'
     end
 
-    progress += " FROM exercise_sets WHERE user_id = #{user_id} AND exercise_id = #{exercise_id} GROUP BY date_clean ORDER BY date_clean DESC LIMIT #{limit};"
+    progress += " FROM exercise_sets WHERE user_id = #{user_id} AND exercise_id = #{exercise_id} GROUP BY date_clean, user_id ORDER BY date_clean DESC LIMIT #{limit};"
     progressData = exec_sql(progress).to_a
     output = {}
 
@@ -73,4 +73,16 @@ end
 
 def create_time_set user_id, exercise_id, date_time, duration_seconds
     exec_sql("INSERT INTO exercise_sets (user_id, exercise_id, date_time, duration_seconds) VALUES (#{user_id}, #{exercise_id}, '#{date_time}', #{duration_seconds});")
+end
+
+def create_set user_id, exercise_id, date_time, reps, weight, duration_seconds
+    exec_sql("INSERT INTO exercise_sets (user_id, exercise_id, date_time, reps, weight, duration_seconds) VALUES (#{user_id}, #{exercise_id}, '#{date_time}', #{reps}, #{weight}, #{duration_seconds});")
+end
+
+def get_top_users exercise_id, measurement_type, time_period = 7
+    if measurement_type == 'time'
+        exec_sql("SELECT user_id, TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean, SUM(duration_seconds) AS sum FROM exercise_sets WHERE date_time BETWEEN current_date - #{time_period - 1} AND current_date + 1 GROUP BY user_id, date_clean;").to_a
+    else
+        exec_sql("SELECT user_id, TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean, SUM(reps * weight) AS sum FROM exercise_sets WHERE date_time BETWEEN current_date - #{time_period - 1} AND current_date + 1 GROUP BY user_id, date_clean;")
+    end
 end

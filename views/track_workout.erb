@@ -1,0 +1,55 @@
+<div class="container">
+    <h5><%= @exercise["exercise_name"] %></h5>
+    <form action="/start/<%= @exercise["exercise_id"]%>" method="post">
+        <div class="section">
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="reps">reps</label>
+                    <input type="number" name="reps" value="0">
+                </div>
+                <div class="input-field col s6">
+                    <label for="weight">weight (kg)</label>
+                    <input type="number" name="weight" value="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="reps">time (seconds)</label>
+                    <input type="number" name="duration_seconds" value="0" class="timer">
+                </div>
+            </div>
+
+            <div class="row">
+                <a class="btn-large waves-effect waves-light amber col s4 timer-start">start</a>
+                <div class="col s4"></div>
+                <a class="btn-large waves-effect waves-light amber col s4 timer-pause">pause</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="row">
+                <button class="btn-large waves-effect waves-light amber darken-2 col s12">complete</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    var addSecond = function() {
+        $('.timer')[0].value = Number($('.timer')[0].value) + 1;
+    }
+    var timerID = 0;
+
+    $('.timer-start')[0].addEventListener('click', function(){
+        timerID = setInterval(addSecond, 1000);
+    });
+
+    $('.timer-pause')[0].addEventListener('click', function(){
+        clearInterval(timerID);
+    });
+
+</script>

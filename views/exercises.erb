@@ -18,6 +18,10 @@
 <a href=""></a>
 
 <div class="fixed-action-btn">
-  <a class="btn-floating btn-large amber darken-2" href="/exercises/new">
-    <i class="large material-icons">add</i>
+    <% if logged_in? %>
+    <a class="btn-floating btn-large amber darken-2" href="/exercises/new"><i class="large material-icons">add</i>
+    <% else %>
+    <a class="btn-floating btn-large amber darken-2" href="/login"><i class="large material-icons">add</i>
+    <% end %>
 </a>
+

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <h4 class="col s9"><%= @exercise["exercise_name"] %></h4>
+        <h4><%= @exercise["exercise_name"] %></h4>
     </div>
 
     <p class="grey-text"><%= @exercise["primary_muscle_group"]%></p>
@@ -92,20 +92,19 @@
         </div>
 
         <div class="container" id="reps">
-            <%= area_chart @reps, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
+            <%= area_chart @reps, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"], ytitle: "Reps" %>
         </div>
 
         <div class="container" id="weight">
-            <%= area_chart @weight, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
+            <%= area_chart @weight, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"], ytitle: "Weight (kg)" %>
         </div>
 
         <div class="container" id="volume">
-            <%= area_chart @volume, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
-            <p>Volume = Weight * Reps</p>
+            <%= area_chart @volume, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"], ytitle: "Volume = Reps * Weight"%>
         </div>
 
         <div class="container" id="time">
-            <%= area_chart @time, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"] %>
+            <%= area_chart @time, messages: {empty: "No previous user data - start the challenge!"}, colors: ["#ffb300","ffc107"], ytitle: "Time (seconds)" %>
         </div>
 
         <% else %>
@@ -144,22 +143,9 @@
 </div>
 
 <div class="fixed-action-btn">
-    <a class="btn-floating btn-large amber darken-2">
-        <i class="large material-icons">play_arrow</i>
-    </a>
     <% if logged_in? %>
-    <ul>
-        <li class="exercise-options"><a class="btn-floating amber" href="/start/reps/<%= @exercise["exercise_id"] %>"><i
-                    class="material-icons">repeat</i></a></li>
-        <li class="exercise-options"><a class="btn-floating amber"
-                href="/start/timer/<%= @exercise["exercise_id"] %>"><i class="material-icons">timer</i></a></li>
-    </ul>
+    <a class="btn-floating btn-large amber darken-2" href="/start/<%=@exercise["exercise_id"]%>"><i class="large material-icons">play_arrow</i></a>
     <% else %>
-    <ul>
-        <li class="exercise-options"><a class="btn-floating amber" href="/login"><i
-                    class="material-icons">repeat</i></a></li>
-        <li class="exercise-options"><a class="btn-floating amber" href="/login"><i class="material-icons">timer</i></a>
-        </li>
-    </ul>
+    <a class="btn-floating btn-large amber darken-2" href="/login"><i class="large material-icons">play_arrow</i></a>
     <% end %>
 </div>

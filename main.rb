@@ -124,27 +124,16 @@ get '/exercises/:exercise_id/:frequency' do
   erb :exercise
 end
 
-get '/start/reps/:exercise_id' do
+get '/start/:exercise_id' do
   @user = current_user
   @exercise = get_exercise(params[:exercise_id])
-  erb :rep_workout
+  erb :track_workout
 end
 
-post '/start/reps/:exercise_id' do
+post '/start/:exercise_id' do
   @user = current_user
-  create_rep_set(@user["user_id"],params[:exercise_id],Time.now,params[:reps],params[:weight])
-  redirect "/exercises/#{params[:exercise_id]}/d"
-end
-
-get '/start/timer/:exercise_id' do
-  @user = current_user
-  @exercise = get_exercise(params[:exercise_id])
-  erb :time_workout
-end
-
-post '/start/timer/:exercise_id' do
-  @user = current_user
-  create_time_set(current_user["user_id"],params[:exercise_id],Time.now,params[:duration])
+  binding.pry
+  create_set(@user["user_id"],params[:exercise_id],Time.now,params[:reps],params[:weight], params[:duration_seconds])
   redirect "/exercises/#{params[:exercise_id]}/d"
 end
 

@@ -54,3 +54,23 @@ main {
     width: inherit;
     overflow-x: scroll;
 }
+
+.input-field input[type=email]:focus {
+    border-bottom: 1px solid #ffc107 !important;
+    box-shadow: 0 1px 0 0 #ffc107 !important;
+}
+
+.input-field input[type=password]:focus {
+    border-bottom: 1px solid #ffc107 !important;
+    box-shadow: 0 1px 0 0 #ffc107 !important;
+}
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #ffc107 !important;
+    box-shadow: 0 1px 0 0 #ffc107 !important;
+}
+
+.input-field input[type=number]:focus {
+    border-bottom: 1px solid #ffc107 !important;
+    box-shadow: 0 1px 0 0 #ffc107 !important;
+}
