@@ -80,3 +80,7 @@ main {
     display: flex;
     overflow: scroll;
 }
+
+.image-chart {
+    width: 80vw;
+}

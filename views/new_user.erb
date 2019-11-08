@@ -1,18 +1,36 @@
-<form action="/users/new" method="post">
-    <label for="">first name</label>
-    <input type="text" name="first_name">
+<div class="container">
+    <form action="/users/new" method="post">
+    <div class="row">
+        <div class="input-field col s12 l6">
+            <label for="">first name</label>
+            <input type="text" name="first_name">
+        </div>
 
-    <label for="">last name</label>
-    <input type="text" name="last_name">
+        <div class="input-field col s12 l6">
+            <label for="">last name</label>
+            <input type="text" name="last_name">
+        </div>
+    </div>
 
-    <label for="">birth year</label>
-    <input type="year" name="birth_year">
+    <div class="row">
+        <div class="input-field col s12 l6">
+            <label for="">email</label>
+            <input type="email" name="email">
+        </div>
 
-    <label for="">email</label>
-    <input type="email" name="email">
-
-    <label for="">password</label>
-    <input type="password" name="password">
+        <div class="input-field col s12 l6">
+            <label for="">password</label>
+            <input type="password" name="password">
+        </div>
+    </div>
     
-    <button type="submit">submit</button>
-</form>
+    <div class="row">
+        <div class="input-field col s12">
+            <label for="">birth year</label>
+            <input type="number" name="birth_year">
+        </div>
+    </div>
+        
+        <button type="submit" class="btn-large waves-effect waves-light amber darken-2 right">submit</button>
+    </form>
+</div>

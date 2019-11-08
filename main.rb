@@ -71,15 +71,15 @@ get '/users/new' do
 end
 
 post '/users/new' do
-  # Create new user
   create_user(params[:first_name], params[:last_name], params[:email], params[:password], params[:birth_year])
-  redirect "/"
+  @user = get_user(params[:email])
+  session[:user_id] = @user["user_id"]
+  redirect "/progress/#{@user["user_id"]}"
 end
 
 delete '/users/delete' do
-# Delete selected user
   delete_user(params[:user_id])
-  redirect "/login"
+  redirect "/"
 end
 
 get '/exercises' do

@@ -40,4 +40,12 @@
         </div>
     </div>
 
+    <div class="row">
+        <form action="/users/delete" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <input type="hidden" name="user_id" value="<%= @user["user_id"]%>">
+            <button class="btn-flat waves-effect waves-light amber-text right">Close account</button>
+        </form>
+    </div>
+
 </div>

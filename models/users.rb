@@ -24,17 +24,8 @@ def get_user search_value
     end
 end
 
-def join_track user_id, track_id
-    exec_sql("INSERT INTO user_tracks (user_id, track_id, date_started) VALUES (#{user_id}, #{track_id}, #{Time.now});")
-end
-
-def complete_track user_id, track_id
-    exec_sql("UPDATE user_tracks SET date_completed = #{Time.now} WHERE user_id = #{user_id} AND track_id = #{track_id};")
-end
-
 def delete_user user_id
-    exec_sql("DELETE FROM workout_sessions WHERE user_id = #{user_id};") # Include a join here for session_exercise_sets
-    exec_sql("DELETE FROM user_tracks WHERE user_id = #{user_id};")
+    exec_sql("DELETE FROM exercise_sets WHERE user_id = #{user_id};") # Include a join here for session_exercise_sets
     exec_sql("DELETE FROM users WHERE user_id = #{user_id};")
     # should we also delete all of their workout history?
 end
