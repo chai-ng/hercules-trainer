@@ -23,7 +23,7 @@
         <div class="row exercise-carousel">
             <% @user_exercises.each do |elem| %>
                 <% exercise = get_exercise(elem) %>
-                <div class="col s5 l4">
+                <div class="col s12 l4">
                     <div class="card">
                         <div class="card-image">
                             <%= area_chart get_exercise_progress(@user["user_id"],elem,'d',exercise["measurement_type"]),colors: ["#ffb300","ffc107"], ytitle: "Reps" %>
