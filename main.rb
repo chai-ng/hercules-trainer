@@ -27,11 +27,8 @@ require_relative 'models/progress'
 require_relative 'models/exercises'
 
 get '/' do
-  # Load home page if user is logged in, or else redirect to login page
   @user = current_user
-  if logged_in?
-    redirect "/progress/#{@user["user_id"]}"
-  end
+  redirect "/progress" if logged_in?
   erb :index
 end
 
@@ -51,7 +48,7 @@ post '/login' do
   password = BCrypt::Password.new(@user["hashed_password"])
   if password == params[:password] && @user != nil
     session[:user_id] = @user["user_id"]
-    redirect "/progress/#{@user["user_id"]}"
+    redirect "/progress"
   else
     redirect "/login/error"
   end
@@ -74,7 +71,7 @@ post '/users/new' do
   create_user(params[:first_name], params[:last_name], params[:email], params[:password], params[:birth_year])
   @user = get_user(params[:email])
   session[:user_id] = @user["user_id"]
-  redirect "/progress/#{@user["user_id"]}"
+  redirect "/progress"
 end
 
 delete '/users/delete' do
@@ -136,7 +133,8 @@ post '/start/:exercise_id' do
   redirect "/exercises/#{params[:exercise_id]}/d"
 end
 
-get '/progress/:user_id' do
+get '/progress' do
+  redirect "/" if not logged_in?
   @user = current_user
   @total_workout_time = get_workout_time(@user["user_id"])
   @total_body_time = get_muscle_group_time(@user["user_id"])
