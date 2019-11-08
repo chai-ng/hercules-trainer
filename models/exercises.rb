@@ -80,14 +80,10 @@ def create_set user_id, exercise_id, date_time, reps, weight, duration_seconds
 end
 
 def get_top_users exercise_id, measurement_type, time_period = 7
+    # Find the most reps / time for a given day for each user, find the max for each user
     if measurement_type == 'time'
-        exec_sql("SELECT user_id, TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean, SUM(duration_seconds) AS sum FROM exercise_sets WHERE date_time BETWEEN current_date - #{time_period - 1} AND current_date + 1 GROUP BY user_id, date_clean;").to_a
+        exec_sql("SELECT user_summary.user_id, user_summary.first_name, MAX(user_summary.time) FROM (SELECT users.user_id, first_name, TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean, MAX(duration_seconds) AS time FROM exercise_sets INNER JOIN users ON exercise_sets.user_id = users.user_id WHERE date_time BETWEEN current_date - #{time_period - 1} AND current_date + 1 AND exercise_id = #{exercise_id} GROUP BY users.user_id, first_name, date_clean) AS user_summary GROUP BY user_summary.user_id, user_summary.first_name ORDER BY max DESC;").to_a
     else
-        exec_sql("SELECT user_id, TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean, SUM(reps * weight) AS sum FROM exercise_sets WHERE date_time BETWEEN current_date - #{time_period - 1} AND current_date + 1 GROUP BY user_id, date_clean;")
+        exec_sql("SELECT user_summary.user_id, user_summary.first_name, MAX(user_summary.volume) FROM (select users.user_id, first_name, TO_CHAR(date_time :: DATE, 'dd Mon yy') AS date_clean, SUM(reps * weight) AS volume FROM exercise_sets INNER JOIN users ON exercise_sets.user_id = users.user_id WHERE date_time BETWEEN current_date - #{time_period - 1} AND current_date + 1 AND exercise_id = #{exercise_id} GROUP BY users.user_id, first_name, date_clean) AS user_summary GROUP BY user_summary.user_id, user_summary.first_name ORDER BY max DESC;").to_a
     end
-
-    # Return array, sorted by volume highest to lowest for each user
-    # object {user_id, volume}
-
-    # Get array of each users,
 end

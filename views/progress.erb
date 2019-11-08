@@ -1,25 +1,43 @@
 <div class="container">
 
-<h5>Welcome back, <%= @user["first_name"]%></h5>
+    <h5 class="row">Welcome back, <%= @user["first_name"]%></h5>
 
-<div class="divider"></div>
+    <div class="divider"></div>
 
-<div class="section">
-    <h6>Your workouts this week</h6>
-    <img src="https://via.placeholder.com/300" alt="">
-    <%#%>
-</div>
+    <div class="section">
+        <h5 class="row">Your workouts this week</h5>
+        <%= column_chart @total_workout_time, suffix: " seconds" %>
+    </div>
 
-<div class="section">
-    <h6>Time spent on body</h6>
-    <img src="https://via.placeholder.com/300" alt="">
-    <%#%>
-</div>
+    <div class="divider"></div>
 
-<div class="section">
-    <h6>Your top exercises</h6>
-    <img src="https://via.placeholder.com/300" alt="">
-    <%#%>
-</div>
+    <div class="section">
+        <h5 class="row">Time spent on body</h5>
+        <%= pie_chart @total_body_time, donut: true %>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <h5 class="row">Your top exercises</h5>
+        <div class="row exercise-carousel">
+            <% @user_exercises.each do |elem| %>
+                <% exercise = get_exercise(elem) %>
+                <div class="col s5 l4">
+                    <div class="card">
+                        <div class="card-image">
+                            <%= area_chart get_exercise_progress(@user["user_id"],elem,'d',exercise["measurement_type"]),colors: ["#ffb300","ffc107"], ytitle: "Reps" %>
+                            <a class="btn-floating halfway-fab waves-effect waves-light red" href="/start/<%= elem %>"><i
+                                    class="material-icons">play_arrow</i></a>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title"><%= exercise["exercise_name"] %></span>
+                            <p><%= exercise["primary_muscle_group"] %></p>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
 
 </div>

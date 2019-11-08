@@ -112,6 +112,7 @@ end
 
 get '/exercises/:exercise_id/:frequency' do
   @exercise = get_exercise(params[:exercise_id])
+  @top_players = get_top_users(params[:exercise_id], @exercise["measurement_type"])
   if logged_in?
     @user = current_user
     @frequency = params[:frequency]
@@ -131,12 +132,14 @@ end
 
 post '/start/:exercise_id' do
   @user = current_user
-  binding.pry
   create_set(@user["user_id"],params[:exercise_id],Time.now,params[:reps],params[:weight], params[:duration_seconds])
   redirect "/exercises/#{params[:exercise_id]}/d"
 end
 
 get '/progress/:user_id' do
   @user = current_user
+  @total_workout_time = get_workout_time(@user["user_id"])
+  @total_body_time = get_muscle_group_time(@user["user_id"])
+  @user_exercises = get_user_exercises(@user["user_id"])
   erb :progress
 end

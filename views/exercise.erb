@@ -68,8 +68,8 @@
     <div class="divider"></div>
     <div class="section">
         <div class="row">
-            <h5 class="col s6">Your progress</h5>
-            <a href="#" data-target="frequency" class="dropdown-trigger btn-flat amber-text right">Frequency
+            <h5>Your progress</h5>
+            <a href="#" data-target="frequency" class="dropdown-trigger btn-flat amber-text">Frequency
                 <i class="material-icons">arrow_drop_down</i>
             </a>
             <ul id="frequency" class="dropdown-content">
@@ -108,28 +108,28 @@
         </div>
 
         <% else %>
-        <div class="row">Login for more information</div>
+        <p class="grey-text">Login for more information</p>
         <% end %>
     </div>
 
     <div class="divider"></div>
 
     <div class="section">
-        <h5>Hercules Top 3</h5>
+        <h5>Hercules Leaderboards</h5>
+        <p>Last 7 days</p>
+        <% if not @top_players.empty? %>
         <ul class="collection">
+            <% @top_players.each do |player| %>
             <li class="collection-item avatar valign-wrapper">
                 <img src="https://via.placeholder.com/100" alt="" class="circle">
-                <span class="title">Person 1</span>
+                <span class="title"><%= player["first_name"]%></span>
+                <span class="amber-text secondary-content"><%= player["max"] %> <%= @exercise["measurement_type"]%></span>
             </li>
-            <li class="collection-item avatar valign-wrapper">
-                <img src="https://via.placeholder.com/100" alt="" class="circle">
-                <span class="title">Person 1</span>
-            </li>
-            <li class="collection-item avatar valign-wrapper">
-                <img src="https://via.placeholder.com/100" alt="" class="circle">
-                <span class="title">Person 1</span>
-            </li>
+            <% end %>
         </ul>
+        <% else %>
+        <p class="grey-text">Nobody has attempted this yet - get ahead of them!</p>
+        <% end %>
     </div>
 
     <div class="divider"></div>
