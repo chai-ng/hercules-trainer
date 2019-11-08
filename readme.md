@@ -1,93 +1,46 @@
 # Hercules App
 
 ## Introduction
-"Duolingo for strength training"
+Hercules - Your Strength Training Companion
 
-Born out of my ACL surgery and need to keep track of my rehab progress, alongside my long standing goals to do a handstand and pull-up.
+Born out of a personal need to better track my strength training journey (and rehab), in a visual way. This app aims to help users:
+- Track their strength training, by time, reps and weight 
+- Create their own exercises when they don't find one that fits
+- Compete against others to top the Hercules leaderboards
 
-Why not gamify the experience to look closer to a game, with skill trees, XP and progression built into this.
+Demo here: https://hercules-training.herokuapp.com/
 
-### Existing apps
-- [ACL Rehab on iOS](https://apps.apple.com/us/app/acl-rehab/id1006387276)
-- [My Knee Injury on iOS](https://www.myinjuryapps.com/my-knee-injury)
-
-## What's the problem and why should we care?
-Average of 10k ACL reconstructions in Australia each year, with less than 20% achieving comparable knee performance to someone without surgery.
-
-Why? Resource-strapped public systems make it difficult to dedicate time to rehab patients beyond 'functional', lack of awareness from patients on the importance of rehab to get more functionality and lifetime value from their knee.
-
-## Use cases and features
-MVP
-- Users can track their strength building progress on exercises, or tracks in a visual way
-- Users can jump on popular 'tracks', or build their own workouts
-- Users can start their 'track', with built-in timer and ability to capture input of their sets / reps easily
-- Users can customise the order of the exercises in the workout
-- Scope: ACL rehab and handstands
-
-Backlog
-- Users can get smart recommendations to increase performance of an exercise, muscle group or track (e.g. based on supporting exercises, increasing frequency, increasing weight, increasing difficulty by changing form)
-- Users receive reminders when track / exercise / muscle group has been neglected for too long
-- Users can choose different modes to set their 'personal bests', such as time-based, weight-based or rep-based
+## Feature backlog
+- Create 'parent' exercises to better structure variations of exercises (e.g. squats and planks with many variations)
+- Users can choose different modes to beat their 'personal bests', such as time-based, weight-based or rep-based
+- Create 'equipment' table to better show
+- Build a workout (multiple exercises)
+- Include search and filter functions to find activities
+- Provide smart recommendations on exercises to motivate users (e.g. based on supporting exercises, increasing frequency, increasing weight, increasing difficulty by changing form)
 - User can compare their progress / strength to 'others like you' for motivation
-- User can export exercise history and data
 
 ## Database structure
 | Table | Fields | Purpose |
 |-------|--------|---------|
-| Users | user_id, name, age, weight, height, email, password | Store metadata on the user 
-| Tracks | track_id, type, name, description, (source) | Roll-up version of workouts, grouped by progression tracks
-| Workouts | workout_id, (track_id), (creator_user_id), (order), (goal) | Proposed workout sessions from pre-defined progression tracks or user-created workouts
-| Exercises | exercise_id, muscle_group, difficulty, image_url, description | Library of all exercises and how they map to the muscle groups and progression tracks
-| User-Tracks | user_id, track_id | Many-to-many relationship map for users and their current tracks
-| Workout-Exercise Joiner | workout_id, exercise_id | Joiner table for the many-to-many relationship between workouts, exercises and users
-| Workout-Exercise-Users | session_id, user_id, track_id, workout_id, exercise_id, sets, reps, weight, duration | Store each workout session for the user to be visualised later
+| Users | user_id, name, age, email, password | Store metadata on the user 
+| Exercises | exercise_id, primary_muscle_group, difficulty, image_url, description | Library of all exercises and how they map to the muscle groups
+| Exercise-Sets | user_id, exercise_id, reps, weight, duration_seconds | Many-to-many relationship map for users, exercises and sets
 
 ### Database relationships
-- One user can have multiple tracks
-- One track can have multiple workouts
-- One exercise can belong to multiple workouts and tracks
-- Each session can only belong to one user, one track, one workout and one exercise 
+- One user can have multiple exercises
+- One exercise can have multiple sets
+- Each set can only belong to one user and one exercise 
 
 ## Technology used
 - [Chartkick - Ruby graphing library](https://chartkick.com/)
-- [WGER REST API - Library of exercises](https://wger.de/en/software/api)
-- [exercise by davejt - Library of exercises](https://github.com/davejt/exercise)
-- [Elasticsearch](https://github.com/elastic/elasticsearch-ruby)
-- [Google Fitness API (for inspiration)](https://developers.google.com/android/reference/com/google/android/gms/fitness/package-summary)
 - [Materialize UI framework](https://materializecss.com/)
 
-## User flows and screenshots
-- Login page
-- Home page for user: Current track and exercise progress, with progress by...
-  - Sessions
-  - Progression track
-  - Exercises
-    - Individual exercise chart over time
-    - Test personal best
-      - Select exercise, list most recent
-      - Select mode (time-based, weight-based, reps-based)
-      - Start and key in individual exercise best
-- Progression tracks: List all progression tracks
-  - Single progression track view: List all workouts involved and criteria to pass this
-    - Single workout view: View all exercises involved, proposed reps and criteria involved
-- Workout session
-  - Preparation: List of exercises, proposed sets and reps for each
-  - In workout, for each set:
-    - Timer or Reps / Weights to input
-  - Completion: Celebration of progress
-- Create workout:
-  - Browse exercise library
-  - Add exercise
-  - Review order
-
-## Key progress visualisations
-- Max volume (reps * weight)
-- Max reps in 1 minute
-- Max reps till exhaustion
-- Max one rep weight
-- Max time (e.g. planks, handstands)
-
-## CVP focus options
-- Progression: Focus on machine-exercises
-- Body weight records: Focus on daily, no-equipment body weight exercises and to beat the record on this in different forms
-  - Example: Planks, squats, push-ups, jumping jacks
+## Learnings
+- Use wireframes to visualise your routes, build the flow of your app and help to cut away the unnecessary pages BEFORE you touch the code
+- Building an MVP means building a SHIPPABLE / USABLE product that users can still get value of
+  - Fake MVP: Build all the back-end features first, then touch front-end
+  - Real MVP: Cut down the feature scope and app complexity to a valuable use case first and get that working
+- Be aware of the complexity that might be included later, but avoid building the complex tables up front when you might not use them yet (refer above)
+- Dates are hard, charts with dates are harder - use plugins
+- Important to be able to read documentation of libraries / plugins that are being used to be able to debug errors - could be as simple as syntax
+- In the absence of Active Records, SQL queries is your best friend to transform data into points you need
