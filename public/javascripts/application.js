@@ -21,16 +21,3 @@ $(document).ready(function(){
     $('.dropdown-trigger').dropdown();
     $('select').formSelect();
 });
-
-// var addSecond = function() {
-//     $('.timer')[0].value = Number($('.timer')[0].value) + 1;
-// }
-// var timerID = 0;
-
-// $('.timer-start')[0].addEventListener('click', function(){
-//     timerID = setInterval(addSecond, 1000);
-// });
-
-// $('.timer-pause')[0].addEventListener('click', function(){
-//     clearInterval(timerID);
-// });

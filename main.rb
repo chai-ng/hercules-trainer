@@ -11,15 +11,12 @@ require 'groupdate'
 require 'chartkick'
 enable :sessions
 
-def exec_sql command
+def exec_sql (sql, params =[])
   conn = PG.connect(ENV['DATABASE_URL'] || {dbname: "hercules"})
-  results = conn.exec(command)
+  conn.prepare(sql, sql)
+  results = conn.exec_prepared(sql, params)
   conn.close
   return results
-end
-
-def get_all table
-  return exec_sql("SELECT * FROM #{table};").to_a
 end
 
 require_relative 'models/users'
@@ -80,7 +77,7 @@ delete '/users/delete' do
 end
 
 get '/exercises' do
-  @exercises = get_all('exercises')
+  @exercises = get_all_exercises()
   @user = current_user
   erb :exercises
 end
