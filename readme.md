@@ -1,5 +1,5 @@
 # Hercules Strength Trainer App
-![heroimage](screenshots/heroimage.png)
+![heroimage](https://github.com/chai-ng/hercules-trainer/blob/master/screenshots/heroimage.png?raw=true)
 
 Demo here: https://hercules-training.herokuapp.com/  
 
@@ -20,12 +20,13 @@ Born out of a personal need to better track my strength training journey (and re
 # Planning
 ## Trello Planning
 Key learning here was to chunk down tasks 
-![Trello](screenshots/trello.png)
+![Trello](https://github.com/chai-ng/hercules-trainer/blob/master/screenshots/trello.png?raw=true))
 ## Figma Wireframing
 What was helpful was also to use the routes as the board name, and drawing out the flows between screens from the key user actions.
 
 Helfpul to start first with handdrawn vs. jumping right into Figma
-![Figma](screenshots/figma.png)
+![Figma](https://github.com/chai-ng/hercules-trainer/blob/master/screenshots/figma.png?raw=true)
+
 ## Database relationships
 - One user
   - can have multiple exercises
